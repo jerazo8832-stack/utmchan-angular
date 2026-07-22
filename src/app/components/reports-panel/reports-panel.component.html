@@ -1,0 +1,24 @@
+<div class="mod-panel">
+  <h2>🚩 Panel de Reportes</h2>
+
+  <p *ngIf="loading">Cargando reportes...</p>
+  <p *ngIf="!loading && !reports.length" class="empty-board-msg">
+    ✅ No hay reportes pendientes. ¡Buen trabajo, equipo!
+  </p>
+
+  <div class="report-card" *ngFor="let r of reports">
+    <div class="report-meta">
+      <a [routerLink]="['/board', r.board_slug, 'thread', r.thread_id || r.post_id]">
+        Ver hilo (post #{{ r.post_id }} en /{{ r.board_slug }}/)
+      </a>
+    </div>
+    <p class="report-reason"><strong>Motivo del reporte:</strong> {{ r.reason }}</p>
+    <p class="report-comment"><strong>Contenido del post:</strong> {{ r.comment }}</p>
+
+    <div class="report-actions">
+      <button (click)="resolve(r.report_id)">✅ Marcar como resuelto</button>
+      <button (click)="deletePost(r.post_id)" class="mod-link-delete">🗑️ Borrar post</button>
+      <button (click)="banPost(r.post_id)" class="mod-link-ban">❌ Banear autor</button>
+    </div>
+  </div>
+</div>

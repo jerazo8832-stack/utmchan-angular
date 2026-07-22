@@ -1,0 +1,41 @@
+<div class="container">
+
+  <div class="mod-bar-logged" *ngIf="auth.currentUser() as user">
+    <div class="mod-bar-left">
+      <span>🛠️ MODERACIÓN: <span class="mod-username">{{ user.username }} ({{ user.role | uppercase }})</span></span>
+
+      <a routerLink="/mod/reportes" class="btn-header-reportes">
+        🚩 Ver Reportes
+        <span [class]="pendingReports > 0 ? 'badge-reportes-active' : 'badge-reportes-empty'">{{ pendingReports }}</span>
+      </a>
+
+      <a *ngIf="auth.isAdmin()" routerLink="/mod/staff" class="btn-header-janitors">👑 Gestionar Janitors</a>
+    </div>
+
+    <a href="javascript:void(0)" (click)="logout()" class="btn-header-logout">❌ Salir</a>
+  </div>
+
+  <div class="welcome-bar-anon" *ngIf="!auth.currentUser()">
+    <span>🎓 Bienvenidos a la cartelera estudiantil de la UTM</span>
+    <a routerLink="/login" class="btn-header-login">🔑 Iniciar Sesión</a>
+  </div>
+
+  <div class="main-header">
+    <img src="/gato.png" alt="Mascota UTMChan" class="forum-mascot">
+    <div class="header-text">
+      <h1>UTMChan</h1>
+      <p>Foro No oficial de la Universidad Técnica de Manabí</p>
+    </div>
+  </div>
+
+  <app-nav [boards]="boards"></app-nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 UTMChan - UTM</p>
+    <p style="margin-top: 8px;">Todos los derechos reservados | Foro estudiantil no oficial</p>
+  </footer>
+</div>

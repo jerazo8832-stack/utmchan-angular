@@ -1,0 +1,56 @@
+<div class="mod-panel">
+  <h2>👮 Gestión de Staff</h2>
+
+  <div class="staff-create-form" *ngIf="auth.isAdmin()">
+    <h3>➕ Crear nueva cuenta de staff</h3>
+
+    <div class="error-msg" *ngIf="error">{{ error }}</div>
+    <div class="success-msg" *ngIf="success">{{ success }}</div>
+
+    <form (ngSubmit)="createStaff()">
+      <input type="text" name="newUsername" placeholder="Usuario" [(ngModel)]="newUsername">
+      <input type="password" name="newPassword" placeholder="Contraseña" [(ngModel)]="newPassword">
+      <select name="newRole" [(ngModel)]="newRole">
+        <option value="janitor">Janitor (moderador)</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit">Crear cuenta</button>
+    </form>
+  </div>
+
+  <h3>📋 Miembros del staff</h3>
+  <table class="staff-table">
+    <thead>
+      <tr><th>Usuario</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of staff">
+        <td>{{ m.username }}</td>
+        <td>{{ m.role }}</td>
+        <td>{{ m.is_active ? '✅ Activo' : '⛔ Revocado' }}</td>
+        <td>
+          <button *ngIf="auth.isAdmin()" (click)="toggle(m)">
+            {{ m.is_active ? 'Revocar' : 'Reactivar' }}
+          </button>
+          <button (click)="changePassword(m)">Cambiar contraseña</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>🚫 IPs baneadas</h3>
+  <table class="staff-table" *ngIf="bans.length; else noBans">
+    <thead>
+      <tr><th>IP</th><th>Motivo</th><th>Fecha</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of bans">
+        <td>{{ b.ip_address }}</td>
+        <td>{{ b.reason }}</td>
+        <td>{{ b.banned_at | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td><button (click)="unban(b)">Levantar baneo</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noBans><p class="empty-board-msg">No hay IPs baneadas actualmente.</p></ng-template>
+</div>

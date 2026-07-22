@@ -1,0 +1,16 @@
+<div *ngIf="board">
+  <div class="thread-breadcrumb">
+    <a [routerLink]="['/board', boardSlug]">« Volver a {{ board.title }}</a>
+  </div>
+
+  <div *ngFor="let post of posts; let first = first">
+    <app-post-item
+      [post]="post"
+      [insideThread]="true"
+      (changed)="reload()"
+      (quote)="onQuote($event)"
+    ></app-post-item>
+  </div>
+
+  <app-post-form [board]="boardSlug" [threadId]="threadId" (posted)="reload()"></app-post-form>
+</div>

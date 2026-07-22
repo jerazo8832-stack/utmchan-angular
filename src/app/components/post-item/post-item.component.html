@@ -1,0 +1,31 @@
+<div class="post" [class.respuesta-previa]="isPreview">
+  <div class="post-header">
+    <span class="post-name">{{ post.name }}</span>
+    <span class="post-title-text" *ngIf="post.title">[{{ post.title }}]</span>
+    <span class="post-number" (click)="onQuoteClick()">#{{ post.id }}</span>
+    <span class="post-time">📅 {{ formattedDate(post.created_at) }}</span>
+
+    <span class="board-tag-inicio" *ngIf="showBoardTag">{{ post.board_slug }}</span>
+
+    <a href="javascript:void(0)" (click)="report()" class="btn-report-action">[🚩 Reportar]</a>
+
+    <a *ngIf="!insideThread && post.thread_id === null"
+       [routerLink]="['/board', post.board_slug, 'thread', post.id]"
+       class="btn-entrar">💬 Responder / Ver hilo completo</a>
+
+    <span class="mod-quick-actions" *ngIf="auth.isStaff()">
+      <a href="javascript:void(0)" (click)="deletePost()" class="mod-link-delete">[🗑️ Borrar]</a>
+      <a href="javascript:void(0)" (click)="banAuthor()" class="mod-link-ban">[❌ Banear]</a>
+    </span>
+  </div>
+
+  <div class="post-content">
+    <a *ngIf="post.image_path" [href]="api.imageUrl(post.image_path)" target="_blank">
+      <img [src]="api.imageUrl(post.image_path)" class="post-img" alt="Imagen">
+    </a>
+    <div>
+      <span [innerHTML]="formattedComment"></span>
+      <span *ngIf="post.banned_comment" [innerHTML]="post.banned_comment"></span>
+    </div>
+  </div>
+</div>

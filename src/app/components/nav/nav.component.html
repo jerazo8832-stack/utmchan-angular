@@ -1,0 +1,10 @@
+<div class="nav">
+  <a
+    *ngFor="let b of boards"
+    [routerLink]="['/board', b.slug]"
+    routerLinkActive="active"
+    class="btn-tablero"
+  >
+    {{ iconFor(b.slug) }} {{ labelFor(b.slug, b.title) }}
+  </a>
+</div>

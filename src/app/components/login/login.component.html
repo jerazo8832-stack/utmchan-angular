@@ -1,0 +1,13 @@
+<div class="login-box">
+  <h2>🔑 Acceso al Staff</h2>
+
+  <div class="error-msg" *ngIf="error">{{ error }}</div>
+
+  <form (ngSubmit)="submit()">
+    <input type="text" name="username" placeholder="Nombre de usuario" [(ngModel)]="username" required>
+    <input type="password" name="password" placeholder="Contraseña" [(ngModel)]="password" required>
+    <button type="submit" class="btn-tablero" style="width:100%; cursor:pointer;" [disabled]="loading">
+      {{ loading ? 'Ingresando...' : 'Ingresar' }}
+    </button>
+  </form>
+</div>

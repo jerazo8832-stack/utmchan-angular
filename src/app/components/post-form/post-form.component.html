@@ -1,0 +1,24 @@
+<form class="reply-form" *ngIf="!(board === 'inicio' && !threadId)" (ngSubmit)="submit()">
+  <h3>{{ threadId ? '✏️ Responder al Hilo #' + threadId : '✏️ Abrir un Nuevo Hilo' }}</h3>
+
+  <input type="text" name="name" placeholder="Nombre (opcional, por defecto: Anónimo)" [(ngModel)]="name">
+
+  <input *ngIf="!threadId" type="text" name="title" placeholder="Tema/Título del Hilo (Opcional)" [(ngModel)]="title">
+
+  <textarea
+    name="comment"
+    id="replyContent"
+    placeholder="Escribe tu mensaje... (Puedes citar haciendo clic en el número #ID)"
+    [(ngModel)]="comment"
+    required
+  ></textarea>
+
+  <label style="font-weight:bold; display:block; margin-bottom:5px;">Adjuntar Imagen (Opcional):</label>
+  <input type="file" name="image" accept="image/*" (change)="onFileChange($event)">
+
+  <div class="upload-error-alert" *ngIf="error">{{ error }}</div>
+
+  <button type="submit" [disabled]="loading">
+    📨 {{ loading ? 'Publicando...' : (threadId ? 'Enviar Respuesta' : 'Publicar Hilo') }}
+  </button>
+</form>

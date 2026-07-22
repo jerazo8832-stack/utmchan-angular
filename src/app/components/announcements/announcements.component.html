@@ -1,0 +1,9 @@
+<div class="announcement-container" *ngIf="announcements.length">
+  <div class="announcement-card" *ngFor="let aviso of announcements">
+    <div class="announcement-header">
+      <span class="announcement-title">📢 {{ aviso.title }}</span>
+      <small class="announcement-time">🕒 {{ formattedDate(aviso.created_at) }}</small>
+    </div>
+    <p class="announcement-body">{{ aviso.content }}</p>
+  </div>
+</div>
